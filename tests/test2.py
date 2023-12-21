@@ -1,11 +1,13 @@
 # main
+import sys
 import pandas as pd
+sys.path.append("..")
 
 # runtime optimization
 import cProfile
 
 # custom functions
-from panel_imputation import EmptySeriesImputer
+from imputation.panel_imputation import EmptySeriesImputer
 
 panel_incomplete_dataset = pd.read_csv('data/data_test2.csv')
 empty_imputer = EmptySeriesImputer('variable')

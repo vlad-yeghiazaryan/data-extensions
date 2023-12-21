@@ -11,7 +11,7 @@ from sklearn.linear_model import LinearRegression, BayesianRidge, Ridge
 from sklearn.preprocessing import StandardScaler, RobustScaler
 
 # custom functions
-from panel_imputation.panel_imputation import EmptySeriesImputer
+from imputation.panel_imputation import EmptySeriesImputer
 
 # simulation of missing data
 data = {
