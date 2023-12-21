@@ -136,9 +136,9 @@ class EmptySeriesImputer():
         index_1 = df_scaled.index.get_level_values(self.fill_method).to_numpy()
         columns = df_scaled.columns.to_numpy()
         df_array = df_scaled.to_numpy()
-        group_names = np.unique(index_1)
-        df_groups = np.split(df_array, np.unique(index_1, return_index=True)[1][1:])
-
+        group_names, group_id = np.unique(index_1, return_index=True)
+        group_names = group_names[np.argsort(group_id)]
+        df_groups = np.split(df_array, len(group_names))
         #  perform (recursive) imputation
         for group, variable in self.missing_priority:
             pred = self.aggregate_estimation(df_groups, group_names, group, columns, variable)

@@ -9,7 +9,8 @@ import cProfile
 # custom functions
 from imputation.panel_imputation import EmptySeriesImputer
 
-panel_incomplete_dataset = pd.read_csv('data/data_test2.csv')
+panel_incomplete_dataset = pd.read_csv('../data/data_test2.csv', index_col=['country', 'date'])
+panel_incomplete_dataset.columns.name = 'variable'
 empty_imputer = EmptySeriesImputer('variable')
 profiler = cProfile.Profile()
 profiler.enable()
