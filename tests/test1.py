@@ -1,6 +1,8 @@
 # main
+import sys
 import numpy as np
 import pandas as pd
+sys.path.append("..")
 
 # Models
 from sklearn.linear_model import LinearRegression, BayesianRidge, Ridge
@@ -9,7 +11,7 @@ from sklearn.linear_model import LinearRegression, BayesianRidge, Ridge
 from sklearn.preprocessing import StandardScaler, RobustScaler
 
 # custom functions
-from panel_imputation import EmptySeriesImputer
+from panel_imputation.panel_imputation import EmptySeriesImputer
 
 # simulation of missing data
 data = {
