@@ -12,6 +12,15 @@
       "console": "integratedTerminal",
       "justMyCode": true,
       "cwd": "${workspaceFolder}/tests"
+    },
+    {
+      "name": "test 2",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/tests/test2.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "cwd": "${workspaceFolder}/tests"
     }
   ]
 }

@@ -117,13 +117,13 @@ class EmptySeriesImputer():
             if (group_name!=group) and (group_item.size!=0):
                 X_group = group_item[:, finite_col_indices]
                 y_group = group_item[:, np.where(columns == variable)[0][0]]
-                finite_cols_group = finite_cols[np.isfinite(X).all(axis=0)]
+                finite_cols_group = finite_cols[np.isfinite(X_group).all(axis=0)]
                 finite_col_indices_group = np.where(np.isin(finite_cols, finite_cols_group))[0]
                 if (finite_col_indices_group.size != 0) and not np.isnan(y_group.sum()):
                     X_group = X_group[:, finite_col_indices_group]
                     some_group_coefs = self.fit_model(X_group, y_group)
-                    group_coefs = np.zeros_like(finite_col_indices, dtype=float)
-                    available_coefs = np.where(np.isin(finite_col_indices, finite_col_indices_group))[0]
+                    group_coefs = np.zeros_like(finite_cols, dtype=float)
+                    available_coefs = np.where(np.isin(finite_cols, finite_cols_group))[0]
                     group_coefs[available_coefs] = some_group_coefs
                     fitted_coefs.append(group_coefs)
         fitted_coefs = np.array(fitted_coefs)
@@ -133,9 +133,7 @@ class EmptySeriesImputer():
 
     def recursive_impute(self, df_scaled, df_filled):
         # Perform estimation using numpy
-        second_index = next((v for v in df_scaled.index.names if v != self.fill_method), None)
         index_1 = df_scaled.index.get_level_values(self.fill_method).to_numpy()
-        index_2 = df_scaled.index.get_level_values(second_index).to_numpy()
         columns = df_scaled.columns.to_numpy()
         df_array = df_scaled.to_numpy()
         group_names = np.unique(index_1)
