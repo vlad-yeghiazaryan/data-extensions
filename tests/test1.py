@@ -35,10 +35,10 @@ search_params = {
     'fill_method': ['country', 'variable'],
     'scaler': [StandardScaler(), RobustScaler(quantile_range=(5.0, 95.0)),
                RobustScaler(quantile_range=(25.0, 75.0))],
-    'model': [LinearRegression(), BayesianRidge(), Ridge()],
-    'recursive_imputation': [False, True],
+               'recursive_imputation': [False, True],
     'aggregate_by':['mean', 'pca'],
     'alternative_priority_bias': [False, True]
 }
 empty_imputer = EmptySeriesImputer('variable')
 calibration_results = empty_imputer.run_calibration(panel_df, search_params, partial_replica=True, recursive_replication=True)
+print(calibration_results)
