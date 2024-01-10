@@ -142,7 +142,7 @@ class EmptySeriesImputer():
             fitted_preds = self.aggregate_estimation(df_groups, group_index, variable_index)
             pred = self.aggregate_predictions(fitted_preds)
             if self.recursive_imputation:
-                df_scaled.loc[group, variable] = pred
+                df_groups[group_index, :, variable_index] = pred
             df_filled.loc[group, variable] = pred
         return df_filled
 
