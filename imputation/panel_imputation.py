@@ -93,7 +93,8 @@ class EmptySeriesImputer():
         if self.aggregate_by == 'pca':
             pca = PCA(1)
             agg_pred = pca.fit_transform(pred).reshape(-1)
-            flip_sign = np.sum(np.corrcoef(np.c_[pred, agg_pred].T)[-1, :-1]) < 0
+            corr = np.corrcoef(np.c_[pred, agg_pred].T)
+            flip_sign = np.sum(corr[-1, :-1]) < 0
             if flip_sign:
                 agg_pred = -agg_pred
         elif self.aggregate_by == 'mean':
@@ -114,7 +115,8 @@ class EmptySeriesImputer():
                 X_group = group_item[:, finite_col_indices]
                 y_group = group_item[:, variable_index]
                 finite_col_indices_group = np.where(np.isfinite(X_group).all(axis=0))[0]
-                if (finite_col_indices_group.size != 0) and not np.isnan(y_group.sum()):
+                y_state = y_group.sum()
+                if (finite_col_indices_group.size != 0) and (not np.isnan(y_state)) and (not y_state==0):
                     X_group = X_group[:, finite_col_indices_group]
                     some_group_coefs = self.fit_model(X_group, y_group)
                     group_coefs = np.zeros_like(finite_col_indices, dtype=float)
