@@ -90,10 +90,11 @@ class EmptySeriesImputer():
 
     def aggregate_predictions(self, pred):
         agg_pred = None
+        pred_scaled = self.scaler.fit_transform(pred)
         if self.aggregate_by == 'pca':
             pca = PCA(1)
-            agg_pred = pca.fit_transform(pred).reshape(-1)
-            corr = np.corrcoef(np.c_[pred, agg_pred].T)
+            agg_pred = pca.fit_transform(pred_scaled).reshape(-1)
+            corr = np.corrcoef(np.c_[pred_scaled, agg_pred].T)
             flip_sign = np.sum(corr[-1, :-1]) < 0
             if flip_sign:
                 agg_pred = -agg_pred
